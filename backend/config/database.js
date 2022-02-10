@@ -5,3 +5,4 @@ const connection = mysql.createConnection({
     password : process.env.DB_PSSW,
     database : process.env.DB_NAME
 });
+module.exports = connection;
