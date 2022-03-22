@@ -1,39 +1,59 @@
-const { urlencoded } = require("express");
-const model = require("../models/AlumnoModel");
+let service = require('../services/AlumnoService');
+const acronimos = require("../config/acronimos").Alumno;
 
 async function crear(req,res){
-    let resp = await model.crear({
-    nombre : req.query.nombre, 
-    apellido_paterno : req.query.apellido_paterno,
-    apellido_materno : "Cabanas",
-    fecha_nacimiento : "2002-04-03",
-    anio_ingreso : 2010
-    });
-    res.send(resp ? "Agregado" : "No se ha podido agregar");
-}
-async function editar(req,res){
-    console.log(req.query);
-    let resp = await model.editar(req.query);
+    let params = setAcronimos(req.query,acronimos);
+    let resp = await service.crear(params);
     res.json({
         success : resp
     });
 }
-async function leer(req,res){
-    let resp = await model.leer({
-        id : req.query.id
+async function editar(req,res){
+    let params = setAcronimos(req.query,acronimos);
+    params.id = req.params.id;
+    console.log(params);
+    //let resp = await service.editar(params);
+    res.json({
+        success : false//resp
     });
-    let respuesta = {};
-    respuesta.data =  resp.length ? resp : [];
+}
+async function leer(req,res){
+    let resp = await service.leer(req.params);
     /*if (respuesta.data.fecha_nacimiento){
         respuesta.data.fecha_nacimiento = respuesta.fecha_nacimiento.toISOString().subString(0,10);
-    }*/
-    res.json(respuesta);
+    }*/    
+    res.json(resp);
 }
 async function eliminar(req,res){
-    let resp = await model.eliminar({
-        id: req.params.id
+    let resp = await service.eliminar(req.params);
+    res.json({
+        success : resp
     });
-    res.send(resp ? "Eliminado" : "No eliminado");
+}
+function setAcronimos(params,acronimos){
+    //Funcion que transforma los parametros acortados desde el usuario 
+    //a sus correspondientes de la entidad
+    /*
+        params{
+            n : "Luis"
+        }
+        acronominos{
+            n : "nombre"
+        }
+        data{
+            nombre : "Luis"
+        }
+    */
+    let data = {};
+    console.log(params);
+    Object.keys(params).forEach(key =>{
+        let acroValor = acronimos[key];
+        if(acroValor){
+            data[acroValor] = params[key];
+            delete params[key];
+        }
+    });
+    return data;
 }
 module.exports = {
     crear,

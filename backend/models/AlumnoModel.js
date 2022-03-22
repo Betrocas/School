@@ -23,29 +23,33 @@ async function crear(data){
 
 async function eliminar(data){
     const id = data.id;
+    console.log(data);
     const sql = `delete from ${tableName} where id = ${data.id}`;    
     const resp = await query(sql);
     return !(resp==null || resp.affectedRows<=0);
 }
 
 async function leer(data){
+    //Retorna un objeto con los datos o vacio
     const id = data.id;
     let sql = `
         select * from ${tableName} where id = ${id};
     `;
     let result = await query(sql);
-    return result;
+    return result[0];
 }
 
 async function editar(data){
-    const id = data.id;
-    let params= {
-        table : tableName,
-        id : id        
-    };
-    delete data.id;
-    params.campos = data;
-    let sql = mysql.editar(params);
+    let query = `
+        update ${tableName}
+        set 
+        nombre = '${data.nombre}',
+        apellido_paterno = '${data.apellido_paterno}',
+        apellido_materno = '${data.apellido_materno}',
+        fecha_nacimiento = '${data.fecha_nacimiento}',
+        anio_ingreso = ${data.anio_ingreso}
+        where id = ${data.id};
+    `;
     let resp = await query(sql);
     return !(resp==null || resp.affectedRows<=0);
 }

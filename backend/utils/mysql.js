@@ -1,24 +1,33 @@
 const connection = require('../config/database');
 
-function editar(data){
-    let table = data.table;
-    let campos = data.campos;
-    let id = data.id;
-    /*
-        {
-            atributo : valor
-        }
-    */
+function crear(entidad,tabla){
+    //La entidad debe ser un objeto plano sin metodos
+    if(entidad.id!==undefined)delete entidad.id;
+    let sql = `insert into ${tabla} (${Object.keys(entidad)}) values (${Object.keys(entidad).map(key=>{
+        let value = entidad[key];
+        if(typeof(value)==='number')return `${value}`;
+        else return `'${value}'`;
+    })})`;
+    return sql;
+}
+function editar(entidad,tabla){
+    //La entidad debe ser un objeto plano sin metodos    
+    let id = entidad.id;
+    delete entidad.id;
     let sql = `
-        update ${table}
+        update ${tabla}
         set
         ${
-            Object.keys(campos).map(value =>{
-                return `${value} = ${typeof(campos[value])==='string' ? `'${campos[value]}'` : arr[value]}`
+            Object.keys(entidad).map(value =>{
+                return `${value} = ${typeof(entidad[value])==='string' ? `'${entidad[value]}'` : entidad[value]}`;            
             })
         }
         where id = ${id};
     `;
+    return sql;
+}
+function eliminar(tabla,id){
+    let sql = `delete from ${tabla} where id=${id}`;
     return sql;
 }
 
@@ -36,13 +45,15 @@ async function query(sql){
     try {    
         respuesta =  await promise;
     }catch (error) {
-       console.log(error); 
+       console.log("MYSQL ERROR: " + error); 
     }
-    console.log("MYSQL: ", respuesta);
+    console.log("MYSQL: ",sql, respuesta);
     return respuesta;
 }
 
 module.exports = {
     query,
-    editar
+    editar,
+    crear,
+    eliminar
 }
