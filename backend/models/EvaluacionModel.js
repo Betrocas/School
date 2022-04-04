@@ -1,8 +1,7 @@
 const mysql = require("../utils/mysql");
-const tableName  = "Materia";
+const tableName  = "Evaluacion";
 
 async function crear(data){
-    console.log("modelo",data);
     let resp = await mysql.query(mysql.crear(data,tableName));
     return resp.affectedRows > 0;
 }

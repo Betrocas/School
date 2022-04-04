@@ -1,25 +1,29 @@
-class Parcial{
-    constructor(fecha_inicio,fecha_final) {
-        this.id = -1;
+let validaciones = require("../helpers/validaciones");
+let fecha = require("../helpers/fecha");
+class Parcial {
+
+    constructor ({id,fecha_inicio,fecha_final}){
+       this.id = id == undefined ? -1 : id;
+       this.setFI(fecha_inicio);
+       this.setFF(fecha_final);
+       if(!validaciones.fecha(this.fecha_inicio,this.fecha_final))throw "Fecha final menor que fecha inicio";
     }
-    setFI(fi){
-        let fecha =  new Data(fi);
-        if(isNaN(fecha.getDate()))throw "Fecha formato incorrecto";
-        let max = ++((new Date()).getFullYear());
-        if(!(fecha.getFullYear()<=max)){
-            throw "Fecha invalida";
+    setFI(f){
+        if(f instanceof Date){
+            if(isNaN(f.getTime()))throw "Fecha invalida";
+            this.fecha_inicio = f;
+        }else{
+            this.fecha_inicio = fecha(f);
         }
-        this.fecha_inicio = fecha;
     }
-    setFF(){
-        let fecha =  new Data(ff);
-        if(isNaN(fecha.getDate()))throw "Fecha formato incorrecto";
-        let min = this.fecha_inicio.getFullYear();
-        let max = min+1;
-        if(!(fecha.getFullYear()>=min && fecha.getFullYear()<=max && fecha.getMonth()>this.fecha_inicio.getMonth())){
-            throw "Fecha invalida";
+    setFF(f){
+        if(f instanceof Date){
+            if(isNaN(f.getTime()))throw "Fecha invalida";
+            this.fecha_final = f;
+        }else{
+            this.fecha_final = fecha(f);
         }
-        this.fecha_final = fecha;
     }
 
 }
+module.exports = Parcial;

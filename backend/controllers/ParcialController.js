@@ -1,5 +1,5 @@
-let service = require("../services/DocenteService");
-let acronimos = require("../config/acronimos").Docente;
+let service = require("../services/ParcialService");
+let acronimos = require("../config/acronimos").Parcial;
 let setAcronimos = require("../helpers/setAcronimos");
 let setRespuesta = require("../helpers/setRespuesta");
 
@@ -21,6 +21,7 @@ async function editar (req,res){
 }
 async function leer (req,res){
     let respuesta = await service.leer(req.params);    
+    console.log(respuesta);
     res.json(setRespuesta(respuesta,true));
 }
 module.exports = {

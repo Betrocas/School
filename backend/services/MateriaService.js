@@ -3,13 +3,13 @@ let model = require("../models/MateriaModel");
 let materiaClasificacion = require("../models/MateriaClasificacionModel");
 let mapper = require("../utils/Mapper").entityToObject;
 let Respuesta = require("../utils/respuesta");
+
 async function crear(data){
     let resp = new Respuesta(false);
     try {        
         data.clasificacion =parseInt(data.clasificacion);
         if(isNaN(data.clasificacion))throw "ID Clasificacion debe ser numerico";
         let MC = await materiaClasificacion.leer({id:data.clasificacion});
-        console.log("ddsfdsds",MC);
         if(Object.keys(MC).length<=0)throw "No se ha encontrado la clasficacion con id: " + data.clasificacion;
         let materia = new Materia(data);
         if(await model.crear(mapper(materia))){

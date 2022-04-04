@@ -55,7 +55,6 @@ class Persona{
         this.apellido_materno= am;
     }
     setFN(fn){
-        console.log(fn); 
         if(fn=== undefined)throw "Fecha nacimiento indefinida";
         let fecha =  new Date(fn);
         if(isNaN(fecha.getDate()))throw "Fecha formato incorrecto";

@@ -10,6 +10,8 @@ app.use("/api",require("./routes/DocenteRoute"));
 app.use("/api",require("./routes/SalonRoute"));
 app.use("/api",require("./routes/ClasificacionMateriaRoute"));
 app.use("/api",require("./routes/MateriaRoute"));
+app.use("/api",require("./routes/ParcialRoute"));
+app.use("/api",require("./routes/CursoRoute"));
 
 app.listen(3000,()=>{
     console.log("listening");

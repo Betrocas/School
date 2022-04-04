@@ -6,6 +6,7 @@ function crear(entidad,tabla){
     let sql = `insert into ${tabla} (${Object.keys(entidad)}) values (${Object.keys(entidad).map(key=>{
         let value = entidad[key];
         if(typeof(value)==='number')return `${value}`;
+        else if(value instanceof Date)return `'${value.toISOString().substring(0,10)}'`;
         else return `'${value}'`;
     })})`;
     return sql;
@@ -19,7 +20,12 @@ function editar(entidad,tabla){
         set
         ${
             Object.keys(entidad).map(value =>{
-                return `${value} = ${typeof(entidad[value])==='string' ? `'${entidad[value]}'` : entidad[value]}`;            
+                //return `${value} = ${typeof(entidad[value])==='string' ? `'${entidad[value]}'` : entidad[value]}`;            
+                let cad = `${value} = `;
+                if(typeof(entidad[value])=="string")cad += `'${entidad[value]}'`;
+                else if(entidad[value] instanceof Date) cad += `'${entidad[value].toISOString().substring(0,10)}'`;
+                else cad += entidad[value];
+                return cad;
             })
         }
         where id = ${id};

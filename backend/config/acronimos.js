@@ -35,11 +35,28 @@ let Materia = {
     desc : "descripcion",
     clasf : "clasificacion"
 }
+let Curso = {
+    prof : "id_docente",
+    mtria : "id_materia",
+    slon : "id_salon"
+}
+let Parcial = {
+    fi : "fecha_inicio",
+    ff : "fecha_final"
+}
+let Evaluacion = {
+    parcial : "parcial",
+    almno : "alumno",
+    crso : "curso"
+}
 module.exports = {
     Docente,
     Administrativo,
     Alumno,
     Salon,
     MateriaClasificacion,
-    Materia
+    Materia,
+    Evaluacion,
+    Parcial,
+    Curso
 }
