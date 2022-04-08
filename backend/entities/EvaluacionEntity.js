@@ -1,25 +1,20 @@
+let setId = require("../helpers/id");
 class Evaluacion{
-    constructor({id,parcial,alumno,curso,calificacion}){
+    constructor({id,id_parcial,id_inscrito,calificacion}){
         this.id = id===undefined ? -1:id;
-        this.setParcial(parcial);
-        this.setCurso(curso);
-        this.setAlumno(alumno);
+        this.setParcial(id_parcial);
+        this.setInscrito(id_inscrito);
         this.setCalificacion(calificacion);
     }
     setParcial(id){
-        if(!(typeof(id=="number") && id>0))throw "Formato id parcial invalido";
-        this.parcial = id;
+        this.id_parcial = setId(id,"Parcial");
     }
-    setCurso(id){
-        if(!(typeof(id=="number") && id>0))throw "Formato id curso invalido";
-        this.curso = id;
-    }
-    setAlumno(id){
-        if(!(typeof(id=="number") && id>0))throw "Formato id alumno invalido";
-        this.alumno = id;
+    setInscrito(id){
+        this.id_inscrito = setId(id,"Inscrito");
     }
     setCalificacion(calificacion){
-        if(!(typeof(calificacion)=="number"))throw "Formato calificacion invalido";
+        calificacion = parseInt(calificacion);
+        if(isNaN(calificacion))throw "Formato calificacion invalido";
         if(calificacion>10&&calificacion<0)throw "Calificacion fuera de rango";
         this.calificacion = calificacion;
     }

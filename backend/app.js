@@ -12,6 +12,8 @@ app.use("/api",require("./routes/ClasificacionMateriaRoute"));
 app.use("/api",require("./routes/MateriaRoute"));
 app.use("/api",require("./routes/ParcialRoute"));
 app.use("/api",require("./routes/CursoRoute"));
+app.use("/api",require("./routes/InscritoRoute"));
+app.use("/api",require("./routes/EvaluacionRoute"));
 
 app.listen(3000,()=>{
     console.log("listening");

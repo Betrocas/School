@@ -45,9 +45,14 @@ let Parcial = {
     ff : "fecha_final"
 }
 let Evaluacion = {
-    parcial : "parcial",
-    almno : "alumno",
-    crso : "curso"
+    parcial : "id_parcial",
+    almno : "id_alumno",
+    crso : "id_curso",
+    nota : "calificacion"
+}
+let Inscrito = {
+    almno : "id_alumno",
+    crso : "id_curso"
 }
 module.exports = {
     Docente,
@@ -58,5 +63,6 @@ module.exports = {
     Materia,
     Evaluacion,
     Parcial,
-    Curso
+    Curso,
+    Inscrito
 }
