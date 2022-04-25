@@ -36,22 +36,17 @@ async function leer(data){
         select * from ${tableName} where id = ${id};
     `;
     let result = await query(sql);
-    return result[0];
+    return result[0]!=undefined ? result[0]:{};
+}
+async function leer(data){
+   let query = `select * from ${tableName} where id_usuario=${data.id}`;
+   let resp =  await mysql.query(query);
+   return resp[0]!=undefined ? resp[0] : {};
 }
 
 async function editar(data){
-    let query = `
-        update ${tableName}
-        set 
-        nombre = '${data.nombre}',
-        apellido_paterno = '${data.apellido_paterno}',
-        apellido_materno = '${data.apellido_materno}',
-        fecha_nacimiento = '${data.fecha_nacimiento}',
-        anio_ingreso = ${data.anio_ingreso}
-        where id = ${data.id};
-    `;
-    let resp = await query(sql);
-    return !(resp==null || resp.affectedRows<=0);
+    let resp = await mysql.query(mysql.editar(data,tableName));
+    return resp.affectedRows>0;
 }
 
 module.exports = {

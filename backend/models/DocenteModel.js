@@ -14,7 +14,12 @@ async function editar(data){
 async function leer(data){
    let query = `select * from ${tableName} where id=${data.id}`;
    let resp =  await mysql.query(query);
-   return resp[0];
+   return resp[0]!=undefined ? resp[0] : {};
+}
+async function leer(data){
+   let query = `select * from ${tableName} where id_usuario=${data.id}`;
+   let resp =  await mysql.query(query);
+   return resp[0]!=undefined ? resp[0] : {};
 }
 async function eliminar(data){
    let resp = await mysql.query(mysql.eliminar(tableName,data.id));

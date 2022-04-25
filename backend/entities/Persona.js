@@ -1,4 +1,6 @@
 let validator = require("../helpers/ValidacionString");
+let validarId= require("../helpers/validaciones").id;
+const roles = require("../config/roles");
 
 //Clase que almacena información general de los actores involucrados
 class Persona{
@@ -9,13 +11,15 @@ class Persona{
         nombre,
         apellido_paterno,
         fecha_nacimiento,
-        apellido_materno = ""
+        apellido_materno = "",
+        id_usuario
     ){        
         this.id = -1;
         this.setNombre(nombre);
         this.setAP(apellido_paterno);        
         this.setAM(apellido_materno);
         this.setFN(fecha_nacimiento);
+        this.setUsuario(id_usuario);
     }
     setNombre(nombre){
         /*
@@ -64,6 +68,10 @@ class Persona{
             throw "Fecha invalida";
         }
         this.fecha_nacimiento = fecha.toISOString().substring(0,10);
+    }
+    setUsuario(usr) {
+        if(!validarId(usr))throw "Formato id_usuario invalido";
+        this.id_usuario = usr;
     }
     #checkLength(cad,max,min=0){
         return cad.length <= max && cad.length >= min; 

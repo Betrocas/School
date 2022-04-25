@@ -54,6 +54,11 @@ let Inscrito = {
     almno : "id_alumno",
     crso : "id_curso"
 }
+let Usuario = {
+    correo : "correo",
+    pass : "contrasena",
+    rol : "rol"
+}
 module.exports = {
     Docente,
     Administrativo,
@@ -64,5 +69,6 @@ module.exports = {
     Evaluacion,
     Parcial,
     Curso,
-    Inscrito
+    Inscrito,
+    Usuario
 }
