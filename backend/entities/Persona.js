@@ -8,11 +8,13 @@ class Persona{
     #minEdad = 6;
     #maxEdad = 45; 
     constructor( 
+        {
         nombre,
         apellido_paterno,
         fecha_nacimiento,
         apellido_materno = "",
         id_usuario
+        }
     ){        
         this.id = -1;
         this.setNombre(nombre);
@@ -69,8 +71,9 @@ class Persona{
         }
         this.fecha_nacimiento = fecha.toISOString().substring(0,10);
     }
-    setUsuario(usr) {
-        if(!validarId(usr))throw "Formato id_usuario invalido";
+    setUsuario(usr) {        
+        if(!validarId(usr)&&usr!=undefined)throw "Formato id_usuario invalido";
+        if(usr==undefined)usr = null;
         this.id_usuario = usr;
     }
     #checkLength(cad,max,min=0){

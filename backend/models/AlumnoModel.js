@@ -38,7 +38,7 @@ async function leer(data){
     let result = await query(sql);
     return result[0]!=undefined ? result[0]:{};
 }
-async function leer(data){
+async function leerUsuario(data){
    let query = `select * from ${tableName} where id_usuario=${data.id}`;
    let resp =  await mysql.query(query);
    return resp[0]!=undefined ? resp[0] : {};
@@ -53,5 +53,6 @@ module.exports = {
     crear,
     eliminar,
     editar,
-    leer
+    leer,
+    leerUsuario
 }

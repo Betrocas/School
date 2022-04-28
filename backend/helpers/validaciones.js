@@ -1,5 +1,5 @@
 function id(id){
-    return (typeof(id)!=="number" ||id<=0);
+    return !(typeof(id)!=="number" ||id<=0);
 }
 function fecha(f,max,min){
     let band;

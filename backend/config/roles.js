@@ -1,5 +1,5 @@
 const roles = {
-    invitado : 0,
+    general : 0,
     alumno : 1,
     docente : 2,
     administrativo : 3

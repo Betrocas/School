@@ -8,7 +8,7 @@ routes
     .put('/administrativo/contrasena/:id',(req,res)=>controller.editarContrasena(req,res,"administrativo"))
     .put('/docente/contrasena/:id',(req,res)=>controller.editarContrasena(req,res,"docente"))
     .put('/alumno/contrasena/:id',(req,res)=>controller.editarContrasena(req,res,"alumno"))
-    .put('/administrativo/administrativo/restablecerContrasena/:id',(req,res)=>controller.restablecerContrasena(req,res,"administrativo"))
+    .put('/administrativo/restablecerContrasena/:id',(req,res)=>controller.restablecerContrasena(req,res,"administrativo"))
     .put('/alumno/restablecerContrasena/:id',(req,res)=>controller.restablecerContrasena(req,res,"alumno"))
     .put('/docente/restablecerContrasena/:id',(req,res)=>controller.restablecerContrasena(req,res,"docente"))
     .get("/:id",controller.leer);

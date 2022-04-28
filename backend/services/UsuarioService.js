@@ -5,6 +5,7 @@ let Respuesta = require("../utils/respuesta");
 const roles = require("../config/roles");
 const hashContrasena = require("../helpers/auth/hashContrasena");
 const validarContrasena = require("../helpers/auth/validarContrasena");
+const { Persona } = require("../entities/Persona");
 
 function getTipo(tipo){
     if(Object.keys(roles).indexOf(tipo)==-1)throw "Tipo entidad no registrado: "+tipo;
@@ -59,7 +60,7 @@ async function guardar(entidad,_rol){
     //Se crea correo y se verifica que no este repetido
         let correo = crearCorreo(entidad);
         let i = 0;
-        while(await model.leerCorreo(correo)){
+        while(await Object.keys(model.leerCorreo(correo)).length){
             i++;
             correo=crearCorreo(entidad,i);
             console.log(i);
@@ -88,6 +89,7 @@ async function restablecerContrasena({id,tipo_entidad}){
         //Se busca al usuario en su tabla
         let entidad  = await modeloEntidad.leer({id});
         if(Object.keys(entidad).length<=0)throw "No se encontro al usuario con id: " + id;
+        entidad = new Persona(entidad);
         //Se valida que el usuario tenga una cuenta vinculada
         if(entidad.id_usuario===null)throw "Este usuario aun no tiene una cuenta creada";
         //Se busca al usuario con el id_usr dentro de su tabla de Usuario
@@ -95,6 +97,7 @@ async function restablecerContrasena({id,tipo_entidad}){
         if(Object.keys(usr).length<=0)throw "No se pudo encontrar al usuario con el id: " + id + " entidad: " + tipo_entidad;
         usr = new Usuario(usr);
         usr.setContrasena(hashContrasena(entidad.fecha_nacimiento));        
+        console.log("La fecha: " + entidad.fecha_nacimiento+hashContrasena(entidad.fecha_nacimiento));
         if(!await model.editar(mapper(usr)))throw "No se pudo restablecer la contrasena";
         resp.success = true;
         resp.msg = "Contrasena restablecida";

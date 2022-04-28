@@ -15,6 +15,7 @@ app.use("/api",require("./routes/CursoRoute"));
 app.use("/api",require("./routes/InscritoRoute"));
 app.use("/api",require("./routes/EvaluacionRoute"));
 app.use("/api/cuenta",require("./routes/UsuarioRoute"));
+app.use("/api",require("./routes/AuthRoute"));
 app.use("/api",require("./routes/prueba"));
 
 app.listen(3000,()=>{

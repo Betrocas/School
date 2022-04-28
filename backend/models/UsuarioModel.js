@@ -17,7 +17,7 @@ async function leer(data){
 async function leerCorreo(correo){
    let sql = `select * from ${tableName} where correo='${correo}'`;
    let resp =  await mysql.query(sql);
-   return resp[0]!=undefined;
+   return resp[0]!=undefined?resp[0]:{};
 }
 async function eliminar(data){
    let resp =await mysql.query(mysql.eliminar(tableName,data.id));
