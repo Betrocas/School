@@ -32,7 +32,7 @@ async function getToken(data){
     */
     let resp = new Respuesta(false);
     try {
-        if(!validarCorreo(data.correo))throw "Formato de correo incorrecto";
+        if(!validarCorreo(data.correo))throw "Formato de correo incorrecto" + data.correo;
         let usr = await modelUsuario.leerCorreo(data.correo);
         //Se busca al usuario con el correo proporcionado
         if(Object.keys(usr).length<=0)throw "Correo incorrectos";
@@ -47,11 +47,14 @@ async function getToken(data){
         let entidad = await modeloEntidad.leerUsuario({id:usr.id});
         let token = await generarToken({
             id: entidad.id,
-            rol
+            rol : roles[rol]
         });
-        console.log("token:"+token);      
         resp.success = true;
-        resp.data = {token};
+        resp.data = {
+            token,
+            id : entidad.id,
+            rol
+        };
     } catch (error) {
        console.log(error);        
     }

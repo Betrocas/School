@@ -5,5 +5,6 @@ routes
     .post('/clasificacionMateria',controller.crear)
     .delete("/clasificacionMateria/:id",controller.eliminar)
     .get("/clasificacionMateria/:id",controller.leer)
+    .get("/clasificacionMateria/",controller.leer)
     .put('/clasificacionMateria/:id',controller.editar);
 module.exports = routes;

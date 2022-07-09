@@ -16,6 +16,11 @@ async function leer(data){
    let resp =  await mysql.query(query);
    return resp[0]!=undefined ? resp[0] : {};
 }
+async function leerTodos(){
+   let query = `select * from ${tableName}`;
+   let resp =  await mysql.query(query);
+   return resp;
+}
 async function leerUsuario(data){
    let query = `select * from ${tableName} where id_usuario=${data.id}`;
    let resp =  await mysql.query(query);
@@ -30,5 +35,6 @@ module.exports = {
     eliminar,
     editar,
     leer,
-    leerUsuario
+    leerUsuario,
+    leerTodos
 }

@@ -57,9 +57,18 @@ async function leer(data){
         return new Respuesta(false,err);
     }
 }
+async function leerTodos(){
+    try {
+        let admin = await model.leerTodos();        
+        return new Respuesta(true,"",admin);
+    } catch (err) {
+        return new Respuesta(false,err);
+    }
+}
 module.exports = {
     crear,
     editar,
     eliminar,
-    leer
+    leer,
+    leerTodos
 }

@@ -3,12 +3,12 @@ const model = require("../models/AdministrativoModel");
 let Respuesta = require("../utils/respuesta");
 let mapper = require("../utils/Mapper").entityToObject;
 async function crear(data){
-    console.log(data);
     try{
         let admin = new Administrativo(data);
         let resp = await model.crear(mapper(admin));
         return new Respuesta(true);
     }catch(err){
+        console.log(err);
         return new Respuesta(false,err);
     }
 }
@@ -42,7 +42,15 @@ async function editar(data){
 }
 async function leer(data){
     try {
-        let admin = await model.leer({id : data.id});
+        let admin = await model.leer({id : data.id});        
+        return new Respuesta(true,"",admin);
+    } catch (err) {
+        return new Respuesta(false,err);
+    }
+}
+async function leerTodos(){
+    try {
+        let admin = await model.leerTodos();        
         return new Respuesta(true,"",admin);
     } catch (err) {
         return new Respuesta(false,err);
@@ -52,5 +60,6 @@ module.exports = {
     crear,
     editar,
     eliminar,
-    leer
+    leer,
+    leerTodos
 }

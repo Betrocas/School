@@ -4,7 +4,9 @@ let setAcronimos = require("../helpers/setAcronimos");
 let setRespuesta = require("../helpers/setRespuesta");
 
 async function login (req,res){
-    let params = setAcronimos(req.query,acronimos);
+    console.log("Parameters: " , req.body)
+    console.log("Parameters: " , req.query)
+    let params = setAcronimos(req.body,acronimos);
     delete params.rol;
     let respuesta = await service.getToken(params);
     let resp = setRespuesta(respuesta,true);

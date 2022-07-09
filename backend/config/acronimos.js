@@ -9,19 +9,22 @@ let Alumno =  {
     ap : "apellido_paterno",
     am : "apellido_materno",
     fn : "fecha_nacimiento",    
-    ai : "anio_ingreso"
+    ai : "anio_ingreso",
+    curp : "CURP"
 }; 
 let Docente =  {
     n : "nombre",
     ap : "apellido_paterno",
     am : "apellido_materno",
-    fn : "fecha_nacimiento"
+    fn : "fecha_nacimiento",
+    curp : "CURP"
 }; 
 let Administrativo  =  {
     n : "nombre",
     ap : "apellido_paterno",
     am : "apellido_materno",
-    fn : "fecha_nacimiento"
+    fn : "fecha_nacimiento",
+    curp : "CURP"
 }; 
 let Salon = {
     cap : "capacidad"

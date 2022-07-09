@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken");
 
 async function validarToken(req,res,next){
     if(req.headers.authorization==undefined){
+        console.log("Error no authorization token");
         res.sendStatus(400);
     }else{
         let token = req.headers.authorization.split(' ').pop();

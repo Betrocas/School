@@ -13,7 +13,7 @@ async function crear(data){
         data.id_materia = parseInt(data.id_materia);
         if(isNaN(data.id_materia))throw "Id materia invalido";
         data.id_salon = parseInt(data.id_salon);
-        if(isNaN(data.salon))throw "Id salon invalido";
+        if(isNaN(data.id_salon))throw "Id salon invalido";
         //Se comprueba que existan los objetos a los que se hace referencia
         let docente = await Docente.leer({id:data.id_docente});
         if(Object.keys(docente).length<=0)throw "No se ha encontrado el docente  con id: " + data.docente;
@@ -82,9 +82,18 @@ async function leer(data){
         return new Respuesta(false,err);
     }
 }
+async function leerTodos(){
+    try {
+        let admin = await model.leerTodos();        
+        return new Respuesta(true,"",admin);
+    } catch (err) {
+        return new Respuesta(false,err);
+    }
+}
 module.exports = {
     crear,
     editar,
     eliminar,
-    leer
+    leer,
+    leerTodos
 }

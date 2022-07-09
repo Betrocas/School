@@ -6,10 +6,11 @@ class Docente extends persona{
         nombre,
         apellido_paterno,
         fecha_nacimiento,
+        CURP,
         apellido_materno = ""
         }
     ){        
-        super(nombre,apellido_paterno,fecha_nacimiento,apellido_materno);
+        super({nombre,apellido_paterno,fecha_nacimiento,apellido_materno,CURP});
         this.id = id===undefined?-1:id;
     }
 

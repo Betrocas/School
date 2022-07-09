@@ -20,8 +20,12 @@ async function editar (req,res){
     res.json(setRespuesta(resp));
 }
 async function leer (req,res){
-    let respuesta = await service.leer(req.params);    
-    console.log(respuesta);
+    let respuesta;
+    if(req.params.id==undefined){
+        respuesta = await service.leerTodos();
+    }else{
+        respuesta = await service.leer(req.params);    
+    }
     res.json(setRespuesta(respuesta,true));
 }
 module.exports = {

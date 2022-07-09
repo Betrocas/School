@@ -14,13 +14,17 @@ async function eliminar (req,res){
     let respuesta = await service.eliminar(params);
     res.json(setRespuesta(respuesta));
 }
-async function leer (req,res){
-    let params = setAcronimos(req.query,acronimos);
-    let respuesta = await service.leer(params);    
+async function leerCursos(req,res){
+    let respuesta = await service.leerCursos(req.params);    
+    res.json(setRespuesta(respuesta,true));
+}
+async function leerAlumnos(req,res){
+    let respuesta = await service.leerAlumnos(req.params);
     res.json(setRespuesta(respuesta,true));
 }
 module.exports = {
     crear,
     eliminar,
-    leer
+    leerCursos,
+    leerAlumnos
 }

@@ -15,6 +15,25 @@ async function leer(data){
    let resp =  await mysql.query(sql);
    return resp[0]!=undefined?resp[0]:{};
 }
+async function leerAlumnos(data){
+    //Retorna alumnos inscrito del curso dado
+    let sql = `select Alumno.id,Alumno.nombre,Alumno.apellido_paterno,Alumno.apellido_materno
+    from Alumno
+    inner join Inscrito on Alumno.id=Inscrito.id_alumno
+    where Inscrito.id_curso = ${data.id}`;
+    let resp = await mysql.query(sql);
+    return resp;
+}
+async function leerCursos(data){    
+    //Retorna cursos al que el alumno esta inscrito
+    let sql = `select Curso.id, Curso.id_materia, Materia.nombre
+    from Curso
+    inner join Inscrito on Curso.id=Inscrito.id_curso
+    inner join Materia on Materia.id=Curso.id_materia
+    where Inscrito.id_alumno=${data.id};`;
+    let resp = await mysql.query(sql);
+    return resp;
+}
 async function eliminar(data){
     if(data.id!=undefined)delete data.id;
     let sql = `delete from ${tableName} where `;
@@ -28,5 +47,7 @@ async function eliminar(data){
 module.exports = {
     crear,
     eliminar,
-    leer
+    leer,
+    leerAlumnos,
+    leerCursos
 }

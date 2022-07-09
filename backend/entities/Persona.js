@@ -6,13 +6,14 @@ const roles = require("../config/roles");
 class Persona{
     //Edades minimas y maxima al momento de registro
     #minEdad = 6;
-    #maxEdad = 45; 
+    #maxEdad = 60; 
     constructor( 
         {
         nombre,
         apellido_paterno,
         fecha_nacimiento,
         apellido_materno = "",
+        CURP,
         id_usuario
         }
     ){        
@@ -22,6 +23,7 @@ class Persona{
         this.setAM(apellido_materno);
         this.setFN(fecha_nacimiento);
         this.setUsuario(id_usuario);
+        this.setCurp(CURP);
     }
     setNombre(nombre){
         /*
@@ -42,7 +44,7 @@ class Persona{
         //Debe tener al menos 5 caracteres y maximo 25
         //Solo se admiten caracteres alfabeticos         
         let maxLength = 25;
-        let minLength = 5;
+        let minLength = 4;
         if(ap=== undefined)throw "Apellido paterno indefinido";
         if(!(validator.stringName(ap) && this.#checkLength(ap,maxLength,minLength))){
             throw "Apellido paterno invalido";
@@ -67,9 +69,15 @@ class Persona{
         let min = (new Date()).getFullYear() - this.#maxEdad; 
         let max = (new Date()).getFullYear() - this.#minEdad; 
         if(!(fecha.getFullYear()>=min && fecha.getFullYear()<=max)){
-            throw "Fecha invalida";
+            throw "Fecha fuera de rango";
         }
         this.fecha_nacimiento = fecha.toISOString().substring(0,10);
+    }
+    setCurp(curp){
+        if(curp===undefined)throw"CURP indefinido";
+        if(typeof(curp)!='string')throw"CURP debe ser tipo string";
+        if(curp.length<10)throw "Tamaño CURP incorrecto";
+        this.CURP = curp.toUpperCase();
     }
     setUsuario(usr) {        
         if(!validarId(usr)&&usr!=undefined)throw "Formato id_usuario invalido";

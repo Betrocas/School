@@ -4,5 +4,6 @@ const controller = require("../controllers/InscritoController");
 routes
     .post('/inscrito',controller.crear)
     .delete("/inscrito",controller.eliminar)
-    .get("/inscrito",controller.leer)
+    .get("/inscrito/alumnos/:id",controller.leerAlumnos)
+    .get("/inscrito/cursos/:id",controller.leerCursos)
 module.exports = routes;

@@ -14,6 +14,11 @@ async function leer(data){
     let resp =  await mysql.query(sql);
     return resp[0] ? resp[0] : {};
 }
+async function leerTodos(){
+   let query = `select * from ${tableName}`;
+   let resp =  await mysql.query(query);
+   return resp;
+}
 async function eliminar(data){
    let resp = await mysql.query(mysql.eliminar(tableName,data.id));
    return resp.affectedRows>0;
@@ -22,5 +27,6 @@ module.exports = {
     crear,
     eliminar,
     editar,
-    leer
+    leer,
+    leerTodos
 }

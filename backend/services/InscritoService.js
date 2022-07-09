@@ -47,30 +47,31 @@ async function eliminar(data){
     }
     return respuesta;
 }
-/*async function editar(data){
+//TODO:Leer por id de alumno y retornar sus cursos
+async function leerCursos(data){
     let respuesta = new Respuesta(false);
     try {
-        let inscrito = await model.leer({
-            id_curso : data.id_curso,
-            id_alumno : data.id_alumno
-        });
-        if(Object.keys(inscrito).length>0){//Se comprueba la existencia
-            inscrito = new Inscrito(inscrito);
-            inscrito.setCurso(data.id_curso);
-            inscrito.setAlumno(data.id_alumno);
-            if(await model.editar(mapper(inscrito))){
-                respuesta.success = true;
-            }else{
-                respuesta.msg = "No se ha podido editar";
-            }
-        }else{
-            respuesta.msg = "No existe el elemento solicitado";
-        }
+        let resp = await model.leerCursos({id:data.id});
+        respuesta.success = true;
+        respuesta.data = resp;
     } catch (err) {
         respuesta.msg = err;
     }
     return respuesta;
-}*/
+}
+
+//TODO:Leer por id de curso y retornar alumnos inscritos
+async function leerAlumnos(data){
+    let respuesta = new Respuesta(false);
+    try {
+        let resp = await model.leerAlumnos({id:data.id});
+        respuesta.success = true;
+        respuesta.data = resp;
+    } catch (err) {
+        respuesta.msg = err;
+    }
+    return respuesta;
+}
 async function leer(data){
     let respuesta = new Respuesta(false);
     try {
@@ -86,7 +87,8 @@ async function leer(data){
     return respuesta;
 }
 module.exports = {
-    leer,
     crear,
-    eliminar
+    eliminar,
+    leerAlumnos,
+    leerCursos
 }

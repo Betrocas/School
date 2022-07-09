@@ -4,15 +4,11 @@ let Respuesta = require("../utils/respuesta");
 let mapper = require("../utils/Mapper").entityToObject;
 async function crear(data) {
     try{
-        let docente = new Docente(
-            data.nombre,
-            data.apellido_paterno,
-            data.fecha_nacimiento,
-            data.apellido_materno
-        );
+        let docente = new Docente(data);
         if( await model.crear(mapper(docente)));
         return new Respuesta(true);
     }catch(err){
+        console.log("Servicio docente",err);
         return new Respuesta(false,err);
     }
 }
@@ -33,6 +29,7 @@ async function eliminar(data){
 async function editar(data){
     let resp = new Respuesta(false);
     try {
+        data.id = parseInt(data.id);
         let docente = await model.leer({id : data.id});
         if(Object.keys(docente).length){
             docente = new Docente(docente);
@@ -62,9 +59,18 @@ async function leer(data){
         return new Respuesta(false,err);
     }
 }
+async function leerTodos(){
+    try {
+        let admin = await model.leerTodos();        
+        return new Respuesta(true,"",admin);
+    } catch (err) {
+        return new Respuesta(false,err);
+    }
+}
 module.exports = {
     crear,
     editar,
     eliminar,
-    leer
+    leer,
+    leerTodos
 }

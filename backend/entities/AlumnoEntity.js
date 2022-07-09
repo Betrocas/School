@@ -7,25 +7,32 @@ class Alumno extends persona{
         apellido_paterno,
         fecha_nacimiento,
         anio_ingreso,
+        CURP,
         apellido_materno = ""
         }
     ){        
-        super(nombre,apellido_paterno,fecha_nacimiento,apellido_materno);
+        super({nombre,apellido_paterno,fecha_nacimiento,apellido_materno,CURP});
         this.setAI(anio_ingreso);
         this.id = id===undefined?-1:id;
     }
     setId(id){
+        id = parseInt(id);
         if(!(typeof(id)=='number' && id>0)){
             throw "Id invalido";            
         }
         this.id = id;
     }
     setAI(data){
-        if(data===undefined)throw "Fecha indefinada";
-        let anio = parseInt(data);
-        let max = (new Date()).getFullYear();
-        if(!(typeof(anio)=="number" && anio<= max)){
-            throw "Anio incorrecto";
+        let anio;
+        if(data===undefined){
+            anio = new Date();
+            anio = anio.getFullYear();
+        }else{
+            anio = parseInt(data);
+            let max = (new Date()).getFullYear();
+            if(!(typeof(anio)=="number" && anio<= max)){
+                throw "Anio incorrecto";
+            }
         }
         this.anio_ingreso = anio;
     }

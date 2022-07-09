@@ -1,11 +1,12 @@
 let service = require('../services/AdministrativoService');
 const acronimos = require("../config/acronimos").Administrativo;
 let setAcronimos = require("../helpers/setAcronimos");
+const { response } = require('express');
 
 async function crear(req,res){
+    console.log(req.query);
     let params = setAcronimos(req.query,acronimos);
     let respuesta = await service.crear(params);
-    console.log(respuesta);
     let resp = setRespuesta(respuesta);
     res.json(resp);
 }
@@ -19,9 +20,13 @@ async function editar(req,res){
     let resp = await service.editar(params);
     res.json(setRespuesta(resp));
 }
-async function leer(req,res){
-    let respuesta = await service.leer(req.params);    
-    console.log(respuesta);
+async function leer(req,res){    
+    let respuesta;
+    if(req.params.id==undefined){
+        respuesta = await service.leerTodos();
+    }else{
+        respuesta = await service.leer(req.params);    
+    }
     res.json(setRespuesta(respuesta,true));
 }
 function setRespuesta(resp,data = false){

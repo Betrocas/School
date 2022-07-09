@@ -37,8 +37,10 @@ async function crear(data){
         let modelEntidad = getTipo(data.tipo_entidad);
         if(modelEntidad===null)throw "No se reconoce la entidad: " + data.tipo_entidad;
         let entidad =await modelEntidad.leer({id:data.id});
+        if(entidad.id_usuario!=null)throw "Este usuario ya posee una cuenta";
         if(Object.keys(entidad).length<=0)throw "No se ha encontrado al usuario con id: "+data.id;
         let id = await guardar(entidad,data.tipo_entidad);
+        //Se inserta el id nuevo de la cuenta usuario en la la tabla del usuario
         if(!await modelEntidad.editar({
             id:data.id,
             id_usuario : id
@@ -63,8 +65,8 @@ async function guardar(entidad,_rol){
         while(await Object.keys(model.leerCorreo(correo)).length){
             i++;
             correo=crearCorreo(entidad,i);
-            console.log(i);
         }
+        if(entidad.fecha_nacimiento instanceof Date)entidad.fecha_nacimiento =  entidad.fecha_nacimiento.toISOString().substring(0,10);
         let contrasena = hashContrasena(entidad.fecha_nacimiento);
         let rol = roles[_rol];
         let usuario = new Usuario({

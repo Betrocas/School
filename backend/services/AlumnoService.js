@@ -1,6 +1,7 @@
 let Alumno = require('../entities/AlumnoEntity');
 const model = require("../models/AlumnoModel");
 const Respuesta = require('../utils/respuesta');
+const mapper = require("../utils/Mapper");
 
 async function crear(data){
     try {
@@ -25,13 +26,15 @@ async function editar(data){
             alumno.setAM(data.apellido_materno);
             alumno.setFN(data.fecha_nacimiento);
             alumno.setAI(data.anio_ingreso);
-            if(await model.editar()){
+            if(await model.editar(mapper.entityToObject(alumno))){
                 respuesta.success = true;
             }else{
                 respuesta.msg = "No existe el elemento a editar";
             }
+        }else{
         }
     } catch (error) {
+        console.log(error);
        respuesta.msg = error; 
     }
     return respuesta;
@@ -48,9 +51,18 @@ async function leer(data){
     respuesta.data =  resp ? resp : [];
     return respuesta;
 }
+async function leerTodos(){
+    try {
+        let admin = await model.leerTodos();        
+        return new Respuesta(true,"",admin);
+    } catch (err) {
+        return new Respuesta(false,err);
+    }
+}
 module.exports = {
     crear,
     editar,
     eliminar,
-    leer
+    leer,
+    leerTodos
 }

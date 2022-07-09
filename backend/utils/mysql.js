@@ -3,6 +3,9 @@ const connection = require('../config/database');
 function crear(entidad,tabla){
     //La entidad debe ser un objeto plano sin metodos
     if(entidad.id!==undefined)delete entidad.id;
+    Object.keys(entidad).forEach(key=>{
+        if(entidad[key]===null)delete entidad[key];
+    });
     let sql = `insert into ${tabla} (${Object.keys(entidad)}) values (${Object.keys(entidad).map(key=>{
         let value = entidad[key];
         if(typeof(value)==='number')return `${value}`;
@@ -15,6 +18,9 @@ function editar(entidad,tabla){
     //La entidad debe ser un objeto plano sin metodos    
     let id = entidad.id;
     delete entidad.id;
+    Object.keys(entidad).forEach(key=>{
+        if(entidad[key]===null)delete entidad[key];
+    });
     let sql = `
         update ${tabla}
         set
